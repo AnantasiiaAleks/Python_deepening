@@ -12,7 +12,8 @@ text = input('Введите текст: ')
 text_without_chars = (text.replace(',', '')
                       .replace('.', '')
                       .replace(' -', '')
-                      .replace(' ', ''))
+                      .replace(' ', '')
+                      .lower())
 char_dict = {}
 #1
 # for char in set(text_without_chars):
@@ -21,12 +22,18 @@ char_dict = {}
 # print(char_dict)
 
 #2
-COUNT = 1
+# COUNT = 1
+# for char in text_without_chars:
+#     count = 1
+#     if char not in char_dict:
+#         char_dict[char] = COUNT
+#     else:
+#         char_dict[char] += 1
+#
+# print(char_dict)
+
+#3
 for char in text_without_chars:
-    count = 1
-    if char not in char_dict:
-        char_dict[char] = COUNT
-    else:
-        char_dict[char] += 1
+    char_dict[char] = char_dict.get(char, 0) + 1
 
 print(char_dict)
