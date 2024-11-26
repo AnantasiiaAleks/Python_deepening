@@ -38,13 +38,16 @@ def files_maker(extension: str = 'txt', min_name: int = 6,
     :param count_files: количество файлов, по умолчанию 2
     """
 
-    for _ in range(count_files):
+    while True:
         name = ''.join(choices(ascii_lowercase + digits + '_',
                 k = randint(min_name, max_name)))
-        data = bytes(randint(0, 255) for _ in range(randint(min_size, max_size)))
+        name = f'{name}.{extension}'
+        if not Path(name).is_file():
+            break
+    data = bytes(randint(0, 255) for _ in range(randint(min_size, max_size)))
 
-        with open(f'{name}.{extension}', 'wb') as file:
-            file.write(data)
+    with open(f'{name}.{extension}', 'wb') as file:
+        file.write(data)
 
 def file_generate(path: str | Path, **kwargs) -> None:
     """
