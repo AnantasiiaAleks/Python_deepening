@@ -13,10 +13,17 @@ _____________________________________________________________________
 ✔ Расширения и количество файлов функция принимает в качестве параметров.
 ✔ Количество переданных расширений может быть любым.
 ✔ Количество файлов для каждого расширения различно
+______________________________________________________________________
+✔ Генерируйте файлы в указанную директорию — отдельный параметр функции.
+✔ Отсутствие/наличие директории не должно вызывать ошибок в работе функции
+(добавьте проверки).
+✔ Существующие файлы не должны удаляться/изменяться в случае совпадения имён.
 '''
 
 from random import randint, choices
 from string import ascii_lowercase, digits
+from pathlib import Path
+import os
 
 def files_maker(extension: str = 'txt', min_name: int = 6,
                 max_name: int = 30, min_size: int = 256,
@@ -39,12 +46,17 @@ def files_maker(extension: str = 'txt', min_name: int = 6,
         with open(f'{name}.{extension}', 'wb') as file:
             file.write(data)
 
-def file_generate(**kwargs) -> None:
+def file_generate(path: str | Path, **kwargs) -> None:
     """
-    Генерирует указанное количество файлов указанного расширения
+    Генерирует указанное количество файлов указанных расширений
     :param **kwargs:
                     расширение=количество
     """
+    if isinstance(path, str):
+        path = Path(path)
+    if not path.is_dir():
+        path.mkdir(parents=True)
+    os.chdir(path)
 
     for ext, count in kwargs.items():
         files_maker(extension=ext, count_files=count)
@@ -52,4 +64,4 @@ def file_generate(**kwargs) -> None:
 
 if __name__ == '__main__':
 
-    file_generate(txt=3, jpg=2, bin=1)
+    file_generate('C:\\Users\\chiffka\\Documents\\Python_deepening\\Files_and_Directories_(7)\\new_dir' , txt=3, jpg=2, bin=1)
