@@ -18,9 +18,9 @@ def json_to_pickle(path: Path) -> None:
         if obj.is_file() and path.suffix == '.json':
             with open(obj, 'r', encoding='utf-8') as f_r:
                 data = json.load(f_r)
-            with open('new_file.pickle', 'wb') as f_w:
+            with open(f'{obj.stem}.pkl', 'wb') as f_w:
                 pickle.dump(data, f_w)
 
 if __name__ == '__main__':
     print(Path.cwd())
-    json_to_pickle(Path('C:\\Users\\chiffka\\Documents\\Python_deepening\\Serialization'))
+    json_to_pickle(Path.cwd())
