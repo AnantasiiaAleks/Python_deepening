@@ -16,7 +16,7 @@ from typing import TextIO
 
 
 def read_or_begin(fd: TextIO) -> str:
-    text = fd.readline()
+    text = fd.readline().strip()
     if text == '':
         fd.seek(0)
         text = fd.readline()
@@ -45,9 +45,9 @@ def converte(digits_file: str, names_file: str, result_file: str) -> None:
             num_1, num_2 = dig_str.split('|')
             mult = int(num_1) * float(num_2)
             if mult < 0:
-                res_f.write(f'{name.lower()}: {abs(mult)}\n')
+                res_f.write(f'{name.lower()}|{abs(mult)}\n')
             else:
-                res_f.write(f'{name.upper()}: {int(round(mult, 0))}\n')
+                res_f.write(f'{name.upper()}|{int(round(mult, 0))}\n')
 
 
 converte('file_for_digits.txt', 'names.txt', 'result_file.txt')

@@ -62,7 +62,7 @@ def mainMenu():
 
     match choice:
         case 0:
-            print('Bye-bye!')
+            print('Поки-ноки!')
             exit()
         case 1:
             rock_paper_scissors()
