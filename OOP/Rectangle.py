@@ -30,14 +30,17 @@ class Rectangle:
             self.length = width
 
     def __str__(self):
-        return f'Класс Rectangle {self.length=}, {self.width=}'
+        return f'Прямоугольник со сторонами {self.length} и {self.width}'
+
+    def __repr__(self):
+        return f'Rectangle({self.width}, {self.length})'
 
 
     def perimeter(self):
         """
         Метод, возвращающий периметр
         """
-        return 2 * (self.length + self.width)
+        return int(2 * (self.length + self.width))
 
     def area(self):
         """
@@ -50,8 +53,8 @@ class Rectangle:
         Сложение периметров экземпляров
         """
         sum_perimeter = self.perimeter() + other.perimeter()
-        a = self.length + other.length
-        b = sum_perimeter / 2 - a
+        a = int(self.length + other.length)
+        b = int(sum_perimeter / 2 - a)
         return Rectangle(a, b)
 
     def __sub__(self, other):
@@ -59,20 +62,39 @@ class Rectangle:
         Вычитание периметров экземпляров
         """
         sub_perimeter = abs(self.perimeter() - other.perimeter())
-        a = abs(self.length - other.length)
-        b = sub_perimeter / 2 - a
+        a = int(abs(self.length - other.length))
+        b = int(sub_perimeter / 2 - a)
         return Rectangle(a, b)
 
-if __name__ == '__main__':
-    rect1 = Rectangle(2, 5)
-    rect2 = Rectangle(4)
+    def __lt__(self, other):
+        """Сравнение по площади.
+        Возвращает True если первый прямоугольник меньше"""
+        return True if self.area() < other.area() else False
 
-    print(rect1.perimeter())
-    print(rect2.perimeter())
+    def __eq__(self, other):
+        """Сравнение по площади.
+        Возвращает True площади равны"""
+        return True if self.area() == other.area() else False
+
+    def __le__(self, other):
+        """Сравнение по площади.
+            Возвращает True, если площадь первого прямоугольника
+            меньше или равна площади второго, иначе False"""
+        return True if self.area() <= other.area() else False
+
+
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 10)
+    rect2 = Rectangle(3, 7)
+
+    print(f"Периметр rect1: {rect1.perimeter()}")
+    print(f"Площадь rect2: {rect2.area()}")
+    print(f"rect1 < rect2: {rect1 < rect2}")
+    print(f"rect1 == rect2: {rect1 == rect2}")
+    print(f"rect1 <= rect2: {rect1 <= rect2}")
     rect3 = rect1 + rect2
-    print(rect3)
+    print(f"Периметр rect3: {rect3.perimeter()}")
     rect4 = rect1 - rect2
-    print(rect4)
-    print()
-    print(rect1.area())
-    print(rect2.area())
+    print(f"Ширина rect4: {rect4.width}")
+    print(rect3)
+    print(repr(rect4))
